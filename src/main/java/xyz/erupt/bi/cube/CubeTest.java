@@ -2,10 +2,7 @@ package xyz.erupt.bi.cube;
 
 import lombok.Getter;
 import lombok.Setter;
-import xyz.erupt.bi.cube.annotation.Cube;
-import xyz.erupt.bi.cube.annotation.Dimension;
-import xyz.erupt.bi.cube.annotation.Measure;
-import xyz.erupt.bi.cube.annotation.Parameter;
+import xyz.erupt.bi.cube.annotation.*;
 import xyz.erupt.bi.cube.constant.SqlType;
 
 @Getter
@@ -26,6 +23,12 @@ import xyz.erupt.bi.cube.constant.SqlType;
                       #end
                       ;
                 """,
+        explores = {
+                @Explore(
+                        name = "AA", where = "name = '1'", cacheTime = 100, params = @Explore.Param(name = "a", value = "100"),
+                        joins = @Join(cube = CubeJoinTest.class, type = "inner join", sqlOn = "CubeTest.name = CubeJoinTest.name")
+                )
+        },
         sqlType = SqlType.SUB_QUERY,
         parameters = {
                 @Parameter(name = "a"),
